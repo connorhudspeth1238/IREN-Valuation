@@ -1,125 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IREN $1000+ AI Valuation Tool (No Mining)</title>
-  <meta name="description" content="Interactive DCF valuation of IREN Limited as a pure AI/HPC data center company – zero Bitcoin mining."/>
-  <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
-    .container { max-width: 1100px; margin: auto; background: #1e293b; border-radius: 16px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-    h1 { text-align: center; color: #60a5fa; margin-bottom: 10px; }
-    .subtitle { text-align: center; color: #94a3b8; margin-bottom: 30px; font-style: italic; }
-    .section { background: #334155; border-radius: 1px solid #475569; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
-    h2 { color: #93c5fd; border-bottom: 2px solid #60a5fa; padding-bottom: 8px; }
-    table { width: 100%; border-collapse: collapse; }
-    td { padding: 10px; }
-    input { width: 100%; padding: 10px; background: #1e293b; border: 1px solid #475569; border-radius: 6px; color: white; font-size: 16px; }
-    .output { font-size: 28px; font-weight: bold; color: #86efac; text-align: center; padding: 20px; background: #166534; border-radius: 12px; }
-    .big { font-size: 48px; color: #86efac; }
-    button { background: #3b82f6; color: white; border: none; padding: 14px 30px; font-size: 18px; border-radius: 8px; cursor: pointer; display: block; margin: 30px auto; }
-    button:hover { background: #2563eb; }
-    footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 14px; }
-  </style>
+<meta charset="UTF-8">
+<title>IREN Pure AI Valuation Tool – Fully Customizable 2026-2030</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {font-family: system-ui, sans-serif; background:#0f172a; color:#e2e8f0; margin:0; padding:20px;}
+  .container {max-width:1200px; margin:auto; background:#1e293b; border-radius:16px; padding:30px; box-shadow:0 20px 50px rgba(0,0,0,0.8);}
+  h1 {text-align:center; color:#60a5fa;}
+  .subtitle {text-align:center; color:#94a3b8; font-style:italic;}
+  .section {background:#334155; border-radius:12px; padding:20px; margin:20px 0;}
+  h2 {color:#93c5fd; border-bottom:2px solid #60a5fa; padding-bottom:8px;}
+  table {width:100%; border-collapse:collapse;}
+  td, th {padding:10px; text-align:left;}
+  input {width:100%; padding:10px; background:#1e293b; border:1px solid #475569; border-radius:6px; color:white; font-size:16px;}
+  button {background:#3b82f6; color:white; border:none; padding:16px 40px; font-size:20px; border-radius:10px; cursor:pointer; display:block; margin:30px auto;}
+  button:hover {background:#2563eb;}
+  .big {font-size:52px; font-weight:bold; color:#86efac; text-align:center;}
+  .output {background:#166534; padding:30px; border-radius:16px; text-align:center;}
+  footer {text-align:center; margin-top:50px; color:#64748b; font-size:14px;}
+</style>
 </head>
 <body>
 <div class="container">
   <h1>IREN – Pure AI/HPC Valuation Tool</h1>
-  <p class="subtitle">No Bitcoin mining. 100% AI Cloud revenue. Updated Nov 2025</p>
+  <p class="subtitle">100% AI Cloud · No Bitcoin Mining · Fully Customizable 2026–2030</p>
 
   <div class="section">
-    <h2>Assumptions – Change any number and click "Recalculate"</h2>
+    <h2>1. Global Assumptions</h2>
     <table>
-      <tr><td>Discount rate</td><td><input type="number" step="0.1" id="discount" value="18.0"> %</td></tr>
-      <tr><td>Terminal growth rate (post-2030)</td><td><input type="number" step="0.1" id="terminalGrowth" value="6.0"> %</td></tr>
-      <tr><td>2030 exit EBITDA multiple</td><td><input type="number" step="1" id="multiple" value="35"> ×</td></tr>
-      <tr><td>Diluted shares 2030 (millions)</td><td><input type="number" step="1" id="shares" value="340"></td></tr>
-      <tr><td>Net debt 2030 ($B)</td><td><input type="number" step="0.1" id="netDebt" value="1.2"></td></tr>
-      <tr><td colspan="2"><strong>Capacity</strong></td></tr>
-      <tr><td>Total power pipeline</td><td><input type="number" id="pipeline" value="3000"> MW</td></tr>
-      <tr><td>% online by 2030</td><td><input type="number" step="1" id="onlinePct" value="85"> %</td></tr>
-      <tr><td>Revenue per MW per year</td><td><input type="number" step="0.1" id="revPerMW" value="10.5"> $M</td></tr>
-      <tr><td>Utilization / availability</td><td><input type="number" step="1" id="util" value="94"> %</td></tr>
-      <tr><td>Gross margin (AI only)</td><td><input type="number" step="0.1" id="grossMargin" value="82"> %</td></tr>
-      <tr><td>Annual OpEx 2030 ($M)</td><td><input type="number" id="opex" value="380"></td></tr>
+      <tr><td>Discount rate (%)</td><td><input type="number" step="0.1" id="discount" value="18.0"></td></tr>
+      <tr><td>Terminal growth rate after 2030 (%)</td><td><input type="number" step="0.1" id="termGrowth" value="6.0"></td></tr>
+      <tr><td>2030 Exit EBITDA multiple</td><td><input type="number" step="1" id="multiple" value="35"></td></tr>
+      <tr><td>Diluted shares 2030 (millions)</td><td><input type="number" id="shares" value="340"></td></tr>
+      <tr><td>Net debt 2030 ($ billion)</td><td><input type="number" step="0.1" id="netDebt" value="1.2"></td></tr>
+      <tr><td>Gross margin (AI/HPC)</td><td><input type="number" step="0.1" id="grossMargin" value="82"> %</td></tr>
     </table>
-    <button onclick="calculate()">Recalculate</button>
   </div>
+
+  <div class="section">
+    <h2>2. Year-by-Year Ramp (edit freely)</h2>
+    <table id="rampTable">
+      <tr style="background:#475569;color:white;"><th>Year</th><th>MW Online</th><th>Revenue per MW ($M)</th><th>OpEx ($M)</th></tr>
+      <tr><td>2026</td><td><input type="number" id="mw26" value="800"></td><td><input type="number" step="0.1" id="rpmw26" value="10.0"></td><td><input type="number" id="opex26" value="250"></td></tr>
+      <tr><td>2027</td><td><input type="number" id="mw27" value="1500"></td><td><input type="number" step="0.1" id="rpmw27" value="10.3"></td><td><input type="number" id="opex27" value="300"></td></tr>
+      <tr><td>2028</td><td><input type="number" id="mw28" value="2100"></td><td><input type="number" step="0.1" id="rpmw28" value="10.5"></td><td><input type="number" id="opex28" value="340"></td></tr>
+      <tr><td>2029</td><td><input type="number" id="mw29" value="2400"></td><td><input type="number" step="0.1" id="rpmw29" value="10.8"></td><td><input type="number" id="opex29" value="370"></td></tr>
+      <tr><td>2030</td><td><input type="number" id="mw30" value="2550"></td><td><input type="number" step="0.1" id="rpmw30" value="10.5"></td><td><input type="number" id="opex30" value="380"></td></tr>
+    </table>
+  </div>
+
+  <button onclick="calculate()">RECALCULATE</button>
 
   <div class="section output">
     <div>DCF Share Price Today (Nov 2025)</div>
     <div class="big" id="dcfPrice">$392</div>
-    <div style="font-size:22px;margin-top:10px">Implied 2030 Share Price → <span id="futurePrice" style="color:#fbbf24">$2,080</span></div>
+    <div style="font-size:28px; margin-top:15px;">
+      2030 Share Price → <span id="price2030" style="color:#fbbf24;">$2,080</span>
+    </div>
   </div>
 
   <div class="section">
-    <h2>2030 Steady-State Numbers</h2>
+    <h2>2030 Snapshot</h2>
     <table>
-      <tr><td>Online AI/HPC capacity</td><td id="mw2030">2,550 MW</td></tr>
-      <tr><td>Revenue</td><td id="revenue">$25.15 B</td></tr>
-      <tr><td>EBITDA</td><td id="ebitda">$20.24 B</td></tr>
-      <tr><td>EBITDA margin</td><td id="margin">80.5 %</td></tr>
-      <tr><td>Enterprise value</td><td id="ev">$708 B</td></tr>
-      <tr><td>Market cap</td><td id="mcap">$707 B</td></tr>
+      <tr><td>MW online</td><td id="mw2030">2,550 MW</td></tr>
+      <tr><td>Revenue</td><td id="rev2030">$25.2 B</td></tr>
+      <tr><td>EBITDA</td><td id="ebitda2030">$20.2 B</td></tr>
+      <tr><td>Enterprise Value</td><td id="ev2030">$707 B</td></tr>
+      <tr><td>Market Cap</td><td id="mcap2030">$706 B</td></tr>
     </table>
   </div>
 
   <footer>
-    Pure AI IREN Valuation Tool – No Bitcoin mining – Nov 2025<br/>
-    Inspired by the legendary EOSE $100 tool. Share freely.
+    IREN Pure AI Valuation Tool · Fully editable 2026–2030 · Nov 2025<br>
+    Inspired by the EOSE $100 tool — now with full year control
   </footer>
 </div>
 
 <script>
 function calculate() {
-  // Inputs
-  const discount = parseFloat(document.getElementById('discount').value) / 100;
-  const termGrowth = parseFloat(document.getElementById('terminalGrowth').value) / 100;
-  const multiple = parseFloat(document.getElementById('multiple').value);
-  const shares = parseFloat(document.getElementById('shares').value);
+  // Global inputs
+  const disc = parseFloat(document.getElementById('discount').value)/100;
+  const termG = parseFloat(document.getElementById('termGrowth').value)/100;
+  const mult = parseFloat(document.getElementById('multiple').value);
+  const shares = parseFloat(document.getElementById('shares').value) * 1e6;
   const netDebt = parseFloat(document.getElementById('netDebt').value) * 1e9;
-  const pipeline = parseFloat(document.getElementById('pipeline').value);
-  const onlinePct = parseFloat(document.getElementById('onlinePct').value) / 100;
-  const revPerMW = parseFloat(document.getElementById('revPerMW').value) * 1e6;
-  const util = parseFloat(document.getElementById('util').value) / 100;
-  const grossMargin = parseFloat(document.getElementById('grossMargin').value) / 100;
-  const opex = parseFloat(document.getElementById('opex').value) * 1e6;
+  const gm = parseFloat(document.getElementById('grossMargin').value)/100;
+
+  // Year data array [2026...2030]
+  const years = [2026,2027,2028,2029,2030];
+  const mw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('mw'+y).value));
+  const rpmw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('rpmw'+y).value) * 1e6);
+  const opex = [26,27,28,29,30].map(y => parseFloat(document.getElementById('opex'+y).value) * 1e6);
+
+  let pvFCF = 0;
+
+  for (let i = 0; i < 5; i++) {
+    const rev = mw[i] * rpmw[i];
+    const grossProfit = rev * gm;
+    const ebitda = grossProfit - opex[i];
+    const fcf = ebitda * 0.87; // ~87% FCF conversion at scale
+    const yearFromNow = i + 1; // 2026 = year 1
+    pvFCF += fcf / Math.pow(1 + disc, yearFromNow);
+  }
+
+  // Terminal value at end of 2030
+  const ebitda2030 = (mw[4] * rpmw[4] * gm) - opex[4];
+  const terminalFCF = ebitda2030 * (1 + termG) * 0.87;
+  const tv = terminalFCF / (disc - termG);
+  const pvTV = tv / Math.pow(1 + disc, 5);
+
+  const equityValueToday = pvFCF + pvTV - netDebt;
+  const dcfPrice = Math.round(equityValueToday / shares);
 
   // 2030 numbers
-  const mw2030 = Math.round(pipeline * onlinePct / 50) * 50; // round to nearest 50 MW
-  const revenue = mw2030 * revPerMW * util / 1e9;
-  const grossProfit = revenue * grossMargin;
-  const ebitda = grossProfit - opex / 1e9;
-  const ev = ebitda * multiple;
-  const mcap = ev - netDebt / 1e9;
-  const price2030 = mcap * 1e9 / (shares * 1e6);
+  const rev2030 = mw[4] * rpmw[4] / 1e9;
+  const ev2030 = ebitda2030 / 1e9 * mult;
+  const mcap2030 = ev2030 - (netDebt/1e9);
+  const price2030 = Math.round(mcap2030 * 1e9 / shares);
 
-  // Simplified 5-year DCF (2026–2030) + terminal
-  // Using aggressive but guided ramp (MW): 800 → 1500 → 2100 → 2400 → 2550
-  const mwRamp = [800, 1500, 2100, 2400, mw2030];
-  let pv = 0;
-  for (let y = 1; y <= 5; y++) {
-    const revY = mwRamp[y-1] * revPerMW * util / 1e9;
-    const ebitdaY = revY * grossMargin - opex/1e9 * Math.pow(1.15, y-1)/1e9;
-    const fcf = ebitdaY * 0.85; // 85% FCF conversion
-    pv += fcf / Math.pow(1 + discount, y);
-  }
-  // Terminal value at 2030
-  const terminalFCF = ebitda * 1.06 * 0.85;
-  const tv = terminalFCF / (discount - termGrowth);
-  pv += tv / Math.pow(1 + discount, 5);
-
-  const equityValueToday = pv * 1e9 - netDebt;
-  const dcfPrice = Math.round(equityValueToday / (shares * 1e6));
-
-  // Update page
-  document.getElementById('mw2030').textContent = mw2030.toLocaleString() + ' MW';
-  document.getElementById('revenue').textContent = '$' + revenue.toFixed(1) + ' B';
-  document.getElementById('ebitda').textContent = '$' + ebitda.toFixed(1) + ' B';
-  document.getElementById('margin').textContent = (ebitda / revenue * 100).toFixed(1) + ' %';
-  document.getElementById('ev').textContent = '$' + (ev).toFixed(0) + ' B';
-  document.getElementById('mcap').textContent = '$' + (mcap).toFixed(0) + ' B';
-  document.getElementById('futurePrice').textContent = '$' + Math.round(price2030).toLocaleString();
+  // Update DOM
+  document.getElementById('mw2030').textContent = mw[4].toLocaleString() + ' MW';
+  document.getElementById('rev2030').textContent = '$' + rev2030.toFixed(1) + ' B';
+  document.getElementById('ebitda2030').textContent = '$' + (ebitda2030/1e9).toFixed(1) + ' B';
+  document.getElementById('ev2030').textContent = '$' + ev2030.toFixed(0) + ' B';
+  document.getElementById('mcap2030').textContent = '$' + mcap2030.toFixed(0) + ' B';
+  document.getElementById('price2030').textContent = '$' + price2030.toLocaleString();
   document.getElementById('dcfPrice').textContent = '$' + dcfPrice.toLocaleString();
 }
 calculate(); // run on load
