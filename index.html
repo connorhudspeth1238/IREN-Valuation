@@ -1,146 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>IREN Pure AI Valuation – Fixed Year-by-Year (w/ Current Price)</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-  body {font-family:system-ui,sans-serif;background:#0a0e17;color:#e2e8f0;margin:0;padding:20px;}
-  .container {max-width:1400px;margin:auto;background:#111827;border-radius:20px;padding:40px;box-shadow:0 30px 70px rgba(0,0,0,0.9);}
-  h1 {text-align:center;color:#60a5fa;margin:0 0 12px;font-size:42px;}
-  .subtitle {text-align:center;color:#94a3b8;font-size:19px;margin-bottom:35px;}
-  .section {background:#1e293b;border-radius:16px;padding:28px;margin:28px 0;}
-  h2 {color:#93c5fd;border-bottom:3px solid #6366f1;padding-bottom:10px;font-size:24px;}
-  table {width:100%;border-collapse:collapse;font-size:17px;}
-  th, td {padding:14px;text-align:left;}
-  th {background:#334155;color:#e0f2fe;}
-  input {width:100%;padding:12px;background:#0f172a;border:1px solid #475569;border-radius:8px;color:white;font-size:17px;box-sizing:border-box;}
-  button {background:#3b82f6;color:white;border:none;padding:20px 60px;font-size:24px;border-radius:12px;cursor:pointer;display:block;margin:45px auto;}
-  button:hover {background:#2563eb;transform:scale(1.03);}
-  .highlight {background:#166534;padding:35px;border-radius:16px;text-align:center;color:#86efac;font-size:30px;}
-  .big {font-size:72px;font-weight:900;color:#86efac;margin:10px 0;}
-  .price {font-weight:900;font-size:22px;color:#fbbf24;}
-  .upside {color:#10b981;font-weight:bold;}
-  .today-row {background:#1e40af !important; color:white;}
-  footer {text-align:center;margin-top:70px;color:#64748b;font-size:15px;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IREN Valuation Dashboard (Live & Editable)</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-<div class="container">
-  <h1>IREN – Pure AI/HPC Valuation Tool</h1>
-  <p class="subtitle">Zero Bitcoin Mining • Full Year-by-Year Share Prices • Current Price: $47.47 (Nov 25 Close) • Nov 2025</p>
+  <div class="container">
+    <h1>IREN Limited – Live Valuation & Power Ramp Dashboard</h1>
+    <p>Edit any yellow cell → charts update instantly | As of Nov 30, 2025</p>
 
-  <div class="section">
-    <h2>Global Assumptions</h2>
-    <table>
-      <tr><td>Discount rate (%)</td>          <td><input type="number" step="0.1" id="disc" value="18.0"></td></tr>
-      <tr><td>Terminal growth after 2030 (%)</td><td><input type="number" step="0.1" id="termG" value="6.0"></td></tr>
-      <tr><td>2030 Exit EBITDA multiple</td>    <td><input type="number" step="1" id="mult" value="35"></td></tr>
-      <tr><td>Diluted shares 2030 (millions)</td><td><input type="number" id="shares" value="340"></td></tr>
-      <tr><td>Net debt 2030 ($B)</td>           <td><input type="number" step="0.1" id="debt" value="1.2"></td></tr>
-      <tr><td>Gross margin (%)</td>             <td><input type="number" step="0.1" id="gm" value="82"></td></tr>
-    </table>
+    <!-- Editable Assumptions Table -->
+    <h2>Edit Assumptions (All numbers in MW or $M)</h2>
+    <table id="assumptions"></table>
+
+    <div class="charts">
+      <div class="chart-container">
+        <h2>MW Online by Site (2025–2030)</h2>
+        <canvas id="mwChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h2>DCF & Free Cash Flow</h2>
+        <canvas id="dcfChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <h2>Fair Share Price Path (10× / 15× / 20× Terminal)</h2>
+        <canvas id="priceChart"></canvas>
+      </div>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>Year-by-Year Ramp 2026–2030</h2>
-    <table>
-      <tr style="background:#1e40af;color:white;">
-        <th>Year</th><th>MW Online</th><th>Revenue/MW ($M/yr)</th><th>OpEx ($M)</th>
-      </tr>
-      <tr><td>2026</td><td><input type="number" id="mw26" value="800"></td>  <td><input type="number" step="0.1" id="r26" value="10.0"></td>  <td><input type="number" id="o26" value="250"></td></tr>
-      <tr><td>2027</td><td><input type="number" id="mw27" value="1500"></td> <td><input type="number" step="0.1" id="r27" value="10.3"></td>  <td><input type="number" id="o27" value="300"></td></tr>
-      <tr><td>2028</td><td><input type="number" id="mw28" value="2100"></td> <td><input type="number" step="0.1" id="r28" value="10.5"></td>  <td><input type="number" id="o28" value="340"></td></tr>
-      <tr><td>2029</td><td><input type="number" id="mw29" value="2400"></td> <td><input type="number" step="0.1" id="r29" value="10.8"></td>  <td><input type="number" id="o29" value="370"></td></tr>
-      <tr><td>2030</td><td><input type="number" id="mw30" value="2550"></td> <td><input type="number" step="0.1" id="r30" value="10.5"></td>  <td><input type="number" id="o30" value="380"></td></tr>
-    </table>
-  </div>
-
-  <button onclick="calc()">RECALCULATE VALUATION</button>
-
-  <div class="section highlight">
-    <div>DCF Share Price Today (Nov 2025)</div>
-    <div class="big" id="todayPrice">$392</div>
-    <div style="font-size:24px; margin-top:10px; color:#fbbf24;">From Current $47.47 → +727% Upside</div>
-  </div>
-
-  <div class="section">
-    <h2>Share Price Every Year (Roll-Forward)</h2>
-    <table>
-      <tr style="background:#1e293b;color:white;">
-        <th>Year</th><th>MW Online</th><th>Revenue</th><th>EBITDA</th><th>Share Price</th><th>Upside from Today</th>
-      </tr>
-      <tr class="today-row"><td><strong>Today (Nov 2025)</strong></td><td>—</td><td>—</td><td>—</td><td class="price" id="p0">$47</td><td>—</td></tr>
-      <tr><td>2026</td><td id="mw26out">800</td><td id="rev26out">$8.0B</td><td id="eb26out">$6.1B</td><td class="price" id="p26">$450</td><td class="upside" id="up26">+846%</td></tr>
-      <tr><td>2027</td><td id="mw27out">1,500</td><td id="rev27out">$15.5B</td><td id="eb27out">$12.1B</td><td class="price" id="p27">$1,120</td><td class="upside" id="up27">+2,260%</td></tr>
-      <tr><td>2028</td><td id="mw28out">2,100</td><td id="rev28out">$22.1B</td><td id="eb28out">$17.5B</td><td class="price" id="p28">$1,780</td><td class="upside" id="up28">+3,650%</td></tr>
-      <tr><td>2029</td><td id="mw29out">2,400</td><td id="rev29out">$25.9B</td><td id="eb29out">$20.7B</td><td class="price" id="p29">$2,150</td><td class="upside" id="up29">+4,430%</td></tr>
-      <tr style="background:#166534;color:white;font-size:20px;"><td>2030</td><td id="mw30out">2,550</td><td id="rev30out">$26.8B</td><td id="eb30out">$21.6B</td><td class="price" id="p30">$2,500</td><td class="upside" id="up30">+5,160%</td></tr>
-    </table>
-  </div>
-
-  <footer>
-    IREN Pure AI Valuation Tool • All Cells Fixed & Populated • Current Price Integrated • Nov 2025<br>
-    Deploy on GitHub Pages – Viral-Ready!
-  </footer>
-</div>
-
-<script>
-const CURRENT_PRICE = 47.47; // Latest close Nov 25, 2025
-
-function calc() {
-  const disc = parseFloat(document.getElementById('disc').value)/100;
-  const termG = parseFloat(document.getElementById('termG').value)/100;
-  const mult = parseFloat(document.getElementById('mult').value);
-  const shares = parseFloat(document.getElementById('shares').value) * 1e6;
-  const debt = parseFloat(document.getElementById('debt').value) * 1e9;
-  const gm = parseFloat(document.getElementById('gm').value)/100;
-
-  const mw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('mw'+y).value) || 0);
-  const rpmw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('r'+y).value || 0) * 1e6);
-  const opex = [26,27,28,29,30].map(y => parseFloat(document.getElementById('o'+y).value || 0) * 1e6);
-
-  let totalPV = 0; // Cumulative PV of all future FCFs (from today)
-
-  for (let i = 0; i < 5; i++) {
-    const rev = mw[i] * rpmw[i];
-    const ebitda = rev * gm - opex[i];
-    const fcf = ebitda * 0.87; // FCF conversion
-
-    // Add this year's FCF to total PV
-    totalPV += fcf / Math.pow(1 + disc, i + 1);
-
-    if (i === 4) {
-      // Terminal value at end of 2030
-      const termFCF = ebitda * (1 + termG) * 0.87;
-      const tv = termFCF / (disc - termG);
-      totalPV += tv / Math.pow(1 + disc, 5);
-    }
-
-    // Roll-forward: Equity value at END of year i (undiscounted from future PVs)
-    const pvAtEndOfYear = totalPV * Math.pow(1 + disc, i + 1);
-    const equityEndOfYear = pvAtEndOfYear - debt;
-    const priceEndOfYear = Math.max(0, Math.round(equityEndOfYear / shares));
-
-    // Update table
-    const year = 2026 + i;
-    document.getElementById('mw' + year + 'out').textContent = mw[i].toLocaleString();
-    document.getElementById('rev' + year + 'out').textContent = '$' + (rev/1e9).toFixed(1) + 'B';
-    document.getElementById('eb' + year + 'out').textContent = '$' + (ebitda/1e9).toFixed(1) + 'B';
-    document.getElementById('p' + year).textContent = '$' + priceEndOfYear.toLocaleString();
-    document.getElementById('up' + year).textContent = '+' + Math.round((priceEndOfYear / CURRENT_PRICE - 1) * 100) + '%';
-  }
-
-  // Today: Full DCF PV minus debt
-  const todayEquity = totalPV - debt;
-  const dcfToday = Math.max(0, Math.round(todayEquity / shares));
-  document.getElementById('todayPrice').textContent = '$' + dcfToday.toLocaleString();
-  document.getElementById('p0').textContent = '$' + CURRENT_PRICE.toLocaleString(2);
-  // Upside for DCF
-  const dcfUpside = Math.round((dcfToday / CURRENT_PRICE - 1) * 100);
-  document.querySelector('.highlight div:last-child').textContent = `From Current $${CURRENT_PRICE.toFixed(2)} → +${dcfUpside}% Upside`;
-}
-calc(); // Auto-run on load
-</script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
