@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>IREN Pure AI Valuation – Year-by-Year Share Price (FIXED)</title>
+<title>IREN Pure AI Valuation – Fixed Year-by-Year (w/ Current Price)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   body {font-family:system-ui,sans-serif;background:#0a0e17;color:#e2e8f0;margin:0;padding:20px;}
-  .container {max-width:1350px;margin:auto;background:#111827;border-radius:20px;padding:40px;box-shadow:0 30px 70px rgba(0,0,0,0.9);}
+  .container {max-width:1400px;margin:auto;background:#111827;border-radius:20px;padding:40px;box-shadow:0 30px 70px rgba(0,0,0,0.9);}
   h1 {text-align:center;color:#60a5fa;margin:0 0 12px;font-size:42px;}
   .subtitle {text-align:center;color:#94a3b8;font-size:19px;margin-bottom:35px;}
   .section {background:#1e293b;border-radius:16px;padding:28px;margin:28px 0;}
@@ -20,13 +20,15 @@
   .highlight {background:#166534;padding:35px;border-radius:16px;text-align:center;color:#86efac;font-size:30px;}
   .big {font-size:72px;font-weight:900;color:#86efac;margin:10px 0;}
   .price {font-weight:900;font-size:22px;color:#fbbf24;}
+  .upside {color:#10b981;font-weight:bold;}
+  .today-row {background:#1e40af !important; color:white;}
   footer {text-align:center;margin-top:70px;color:#64748b;font-size:15px;}
 </style>
 </head>
 <body>
 <div class="container">
   <h1>IREN – Pure AI/HPC Valuation Tool</h1>
-  <p class="subtitle">Zero Bitcoin Mining • Full Year-by-Year Share Prices • Nov 2025</p>
+  <p class="subtitle">Zero Bitcoin Mining • Full Year-by-Year Share Prices • Current Price: $47.47 (Nov 25 Close) • Nov 2025</p>
 
   <div class="section">
     <h2>Global Assumptions</h2>
@@ -59,32 +61,33 @@
   <div class="section highlight">
     <div>DCF Share Price Today (Nov 2025)</div>
     <div class="big" id="todayPrice">$392</div>
+    <div style="font-size:24px; margin-top:10px; color:#fbbf24;">From Current $47.47 → +727% Upside</div>
   </div>
 
   <div class="section">
     <h2>Share Price Every Year (Roll-Forward)</h2>
     <table>
       <tr style="background:#1e293b;color:white;">
-        <th>Year</th><th>MW Online</th><th>Revenue</th><th>EBITDA</th><th>Share Price</th>
+        <th>Year</th><th>MW Online</th><th>Revenue</th><th>EBITDA</th><th>Share Price</th><th>Upside from Today</th>
       </tr>
-      <tr><td><strong>Today (Nov 2025)</strong></td><td>—</td><td>—</td><td>—</td><td class="price" id="p0">$392</td></tr>
-      <tr><td>2026</td><td id="mw26out">800</td><td id="rev26out">$8.0B</td><td id="eb26out">$6.1B</td><td class="price" id="p26">$0</td></tr>
-      <tr><td>2027</td><td id="mw27out">1,500</td><td id="rev27out">$15.5B</td><td id="eb27out">$12.1B</td><td class="price" id="p27">$0</td></tr>
-      <tr><td>2028</td><td id="mw28out">2,100</td><td id="rev28out">$22.1B</td><td id="eb28out">$17.5B</td><td class="price" id="p28">$0</td></tr>
-      <tr><td>2029</td><td id="mw29out">2,400</td><td id="rev29out">$25.9B</td><td id="eb29out">$20.7B</td><td class="price" id="p29">$0</td></tr>
-      <tr style="background:#166534;color:white;font-size:20px;">
-        <td>2030</td><td id="mw30out">2,550</td><td id="rev30out">$26.8B</td><td id="eb30out">$21.6B</td><td class="price" id="p30">$2,500+</td>
-      </tr>
+      <tr class="today-row"><td><strong>Today (Nov 2025)</strong></td><td>—</td><td>—</td><td>—</td><td class="price" id="p0">$47</td><td>—</td></tr>
+      <tr><td>2026</td><td id="mw26out">800</td><td id="rev26out">$8.0B</td><td id="eb26out">$6.1B</td><td class="price" id="p26">$450</td><td class="upside" id="up26">+846%</td></tr>
+      <tr><td>2027</td><td id="mw27out">1,500</td><td id="rev27out">$15.5B</td><td id="eb27out">$12.1B</td><td class="price" id="p27">$1,120</td><td class="upside" id="up27">+2,260%</td></tr>
+      <tr><td>2028</td><td id="mw28out">2,100</td><td id="rev28out">$22.1B</td><td id="eb28out">$17.5B</td><td class="price" id="p28">$1,780</td><td class="upside" id="up28">+3,650%</td></tr>
+      <tr><td>2029</td><td id="mw29out">2,400</td><td id="rev29out">$25.9B</td><td id="eb29out">$20.7B</td><td class="price" id="p29">$2,150</td><td class="upside" id="up29">+4,430%</td></tr>
+      <tr style="background:#166534;color:white;font-size:20px;"><td>2030</td><td id="mw30out">2,550</td><td id="rev30out">$26.8B</td><td id="eb30out">$21.6B</td><td class="price" id="p30">$2,500</td><td class="upside" id="up30">+5,160%</td></tr>
     </table>
   </div>
 
   <footer>
-    IREN Pure AI Valuation Tool • All cells now populate instantly • Nov 2025<br>
-    Deploy in 30 seconds on GitHub Pages
+    IREN Pure AI Valuation Tool • All Cells Fixed & Populated • Current Price Integrated • Nov 2025<br>
+    Deploy on GitHub Pages – Viral-Ready!
   </footer>
 </div>
 
 <script>
+const CURRENT_PRICE = 47.47; // Latest close Nov 25, 2025
+
 function calc() {
   const disc = parseFloat(document.getElementById('disc').value)/100;
   const termG = parseFloat(document.getElementById('termG').value)/100;
@@ -97,42 +100,47 @@ function calc() {
   const rpmw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('r'+y).value || 0) * 1e6);
   const opex = [26,27,28,29,30].map(y => parseFloat(document.getElementById('o'+y).value || 0) * 1e6);
 
-  let pvOfAllFutureFCF = 0;
+  let totalPV = 0; // Cumulative PV of all future FCFs (from today)
 
-  // Calculate year-by-year
   for (let i = 0; i < 5; i++) {
     const rev = mw[i] * rpmw[i];
     const ebitda = rev * gm - opex[i];
-    const fcf = ebitda * 0.87;
+    const fcf = ebitda * 0.87; // FCF conversion
 
-    // Discount this year's FCF back to today
-    pvOfAllFutureFCF += fcf / Math.pow(1 + disc, i + 1);
+    // Add this year's FCF to total PV
+    totalPV += fcf / Math.pow(1 + disc, i + 1);
 
     if (i === 4) {
-      // Add terminal value in 2030
+      // Terminal value at end of 2030
       const termFCF = ebitda * (1 + termG) * 0.87;
       const tv = termFCF / (disc - termG);
-      pvOfAllFutureFCF += tv / Math.pow(1 + disc, 5);
+      totalPV += tv / Math.pow(1 + disc, 5);
     }
 
-    // Roll-forward equity value at END of this year
-    const equityValueEndOfYear = (pvOfAllFutureFCF * Math.pow(1 + disc, i + 1)) - debt;
-    const priceEndOfYear = Math.max(0, Math.round(equityValueEndOfYear / shares));
+    // Roll-forward: Equity value at END of year i (undiscounted from future PVs)
+    const pvAtEndOfYear = totalPV * Math.pow(1 + disc, i + 1);
+    const equityEndOfYear = pvAtEndOfYear - debt;
+    const priceEndOfYear = Math.max(0, Math.round(equityEndOfYear / shares));
 
-    // Update table row
-    document.getElementById('mw' + (2026+i) + 'out').textContent = mw[i].toLocaleString();
-    document.getElementById('rev' + (2026+i) + 'out').textContent = '$' + (rev/1e9).toFixed(1) + 'B';
-    document.getElementById('eb' + (2026+i) + 'out').textContent = '$' + (ebitda/1e9).toFixed(1) + 'B';
-    document.getElementById('p' + (2026+i)).textContent = '$' + priceEndOfYear.toLocaleString();
+    // Update table
+    const year = 2026 + i;
+    document.getElementById('mw' + year + 'out').textContent = mw[i].toLocaleString();
+    document.getElementById('rev' + year + 'out').textContent = '$' + (rev/1e9).toFixed(1) + 'B';
+    document.getElementById('eb' + year + 'out').textContent = '$' + (ebitda/1e9).toFixed(1) + 'B';
+    document.getElementById('p' + year).textContent = '$' + priceEndOfYear.toLocaleString();
+    document.getElementById('up' + year).textContent = '+' + Math.round((priceEndOfYear / CURRENT_PRICE - 1) * 100) + '%';
   }
 
-  // Today price
-  const todayEquity = pvOfAllFutureFCF - debt;
-  const todayPrice = Math.max(0, Math.round(todayEquity / shares));
-  document.getElementById('todayPrice').textContent = '$' + todayPrice.toLocaleString();
-  document.getElementById('p0').textContent = '$' + todayPrice.toLocaleString();
+  // Today: Full DCF PV minus debt
+  const todayEquity = totalPV - debt;
+  const dcfToday = Math.max(0, Math.round(todayEquity / shares));
+  document.getElementById('todayPrice').textContent = '$' + dcfToday.toLocaleString();
+  document.getElementById('p0').textContent = '$' + CURRENT_PRICE.toLocaleString(2);
+  // Upside for DCF
+  const dcfUpside = Math.round((dcfToday / CURRENT_PRICE - 1) * 100);
+  document.querySelector('.highlight div:last-child').textContent = `From Current $${CURRENT_PRICE.toFixed(2)} → +${dcfUpside}% Upside`;
 }
-calc(); // run immediately
+calc(); // Auto-run on load
 </script>
 </body>
 </html>
