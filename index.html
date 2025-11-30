@@ -2,36 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>IREN Valuation Dashboard (Live & Editable)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>IREN Valuation Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
   <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
   <div class="container">
-    <h1>IREN Limited – Live Valuation & Power Ramp Dashboard</h1>
-    <p>Edit any yellow cell → charts update instantly | As of Nov 30, 2025</p>
+    <h1>IREN Limited – Live Valuation Dashboard</h1>
+    <p class="subtitle">Edit any yellow cell → charts update instantly (works on phone!)</p>
 
-    <!-- Editable Assumptions Table -->
-    <h2>Edit Assumptions (All numbers in MW or $M)</h2>
-    <table id="assumptions"></table>
+    <h2>Edit Assumptions (MW or $M)</h2>
+    <div class="table-wrapper">
+      <table id="assumptions"></table>
+    </div>
 
     <div class="charts">
       <div class="chart-container">
-        <h2>MW Online by Site (2025–2030)</h2>
-        <canvas id="mwChart"></canvas>
+        <h2>AI/HPC MW Online by Site</h2>
+        <div class="chart-wrapper"><canvas id="mwChart"></canvas></div>
       </div>
 
       <div class="chart-container">
-        <h2>DCF & Free Cash Flow</h2>
-        <canvas id="dcfChart"></canvas>
+        <h2>DCF & Free Cash Flow ($M)</h2>
+        <div class="chart-wrapper"><canvas id="dcfChart"></canvas></div>
       </div>
 
       <div class="chart-container">
         <h2>Fair Share Price Path (10× / 15× / 20× Terminal)</h2>
-        <canvas id="priceChart"></canvas>
+        <div class="chart-wrapper"><canvas id="priceChart"></canvas></div>
       </div>
     </div>
   </div>
