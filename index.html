@@ -2,133 +2,141 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>IREN Pure AI Valuation Tool – Fully Customizable 2026-2030</title>
+<title>IREN Pure AI Valuation – Year-by-Year Share Price</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body {font-family: system-ui, sans-serif; background:#0f172a; color:#e2e8f0; margin:0; padding:20px;}
-  .container {max-width:1200px; margin:auto; background:#1e293b; border-radius:16px; padding:30px; box-shadow:0 20px 50px rgba(0,0,0,0.8);}
-  h1 {text-align:center; color:#60a5fa;}
-  .subtitle {text-align:center; color:#94a3b8; font-style:italic;}
-  .section {background:#334155; border-radius:12px; padding:20px; margin:20px 0;}
-  h2 {color:#93c5fd; border-bottom:2px solid #60a5fa; padding-bottom:8px;}
-  table {width:100%; border-collapse:collapse;}
-  td, th {padding:10px; text-align:left;}
-  input {width:100%; padding:10px; background:#1e293b; border:1px solid #475569; border-radius:6px; color:white; font-size:16px;}
-  button {background:#3b82f6; color:white; border:none; padding:16px 40px; font-size:20px; border-radius:10px; cursor:pointer; display:block; margin:30px auto;}
-  button:hover {background:#2563eb;}
-  .big {font-size:52px; font-weight:bold; color:#86efac; text-align:center;}
-  .output {background:#166534; padding:30px; border-radius:16px; text-align:center;}
-  footer {text-align:center; margin-top:50px; color:#64748b; font-size:14px;}
+  body {font-family:system-ui,sans-serif; background:#0a0e17; color:#e2e8f0; margin:0; padding:20px;}
+  .container {max-width:1300px; margin:auto; background:#111827; border-radius:20px; padding:35px; box-shadow:0 25px 60px rgba(0,0,0,0.9);}
+  h1 {text-align:center; color:#60a5fa; margin:0 0 10px;}
+  .subtitle {text-align:center; color:#94a3b8; font-size:18px; margin-bottom:30px;}
+  .section {background:#1e293b; border-radius:16px; padding:25px; margin:25px 0;}
+  h2 {color:#93c5fd; border-bottom:3px solid #6366f1; padding-bottom:10px;}
+  table {width:100%; border-collapse:collapse; font-size:16px;}
+  th, td {padding:12px; text-align:left;}
+  th {background:#334155; color:#e0f2fe;}
+  input {width:100%; padding:11px; background:#0f172a; border:1px solid #475569; border-radius:8px; color:white; font-size:16px;}
+  button {background:#3b82f6; color:white; border:none; padding:18px 50px; font-size:22px; border-radius:12px; cursor:pointer; display:block; margin:40px auto;}
+  button:hover {background:#2563eb; transform:scale(1.02);}
+  .highlight {background:#166534; padding:30px; border-radius:16px; text-align:center; font-size:28px; color:#86efac;}
+  .big {font-size:64px; font-weight:900; color:#86efac;}
+  .price-row td {font-weight:bold; font-size:20px; color:#fbbf24;}
+  footer {text-align:center; margin-top:60px; color:#64748b;}
 </style>
 </head>
 <body>
 <div class="container">
   <h1>IREN – Pure AI/HPC Valuation Tool</h1>
-  <p class="subtitle">100% AI Cloud · No Bitcoin Mining · Fully Customizable 2026–2030</p>
+  <p class="subtitle">Zero Bitcoin Mining • Full Year-by-Year Share Price • Nov 2025</p>
 
   <div class="section">
-    <h2>1. Global Assumptions</h2>
+    <h2>Global Assumptions</h2>
     <table>
-      <tr><td>Discount rate (%)</td><td><input type="number" step="0.1" id="discount" value="18.0"></td></tr>
-      <tr><td>Terminal growth rate after 2030 (%)</td><td><input type="number" step="0.1" id="termGrowth" value="6.0"></td></tr>
-      <tr><td>2030 Exit EBITDA multiple</td><td><input type="number" step="1" id="multiple" value="35"></td></tr>
-      <tr><td>Diluted shares 2030 (millions)</td><td><input type="number" id="shares" value="340"></td></tr>
-      <tr><td>Net debt 2030 ($ billion)</td><td><input type="number" step="0.1" id="netDebt" value="1.2"></td></tr>
-      <tr><td>Gross margin (AI/HPC)</td><td><input type="number" step="0.1" id="grossMargin" value="82"> %</td></tr>
+      <tr><td>Discount rate (%)</td><td><input type="number" step="0.1" id="disc" value="18.0"></td></tr>
+      <tr><td>Terminal growth after 2030 (%)</td><td><input type="number" step="0.1" id="termG" value="6.0"></td></tr>
+      <tr><td>2030 Exit EBITDA multiple</td><td><input type="number" step="1" id="mult" value="35"></td></tr>
+      <tr><td>Diluted shares 2030 (M)</td><td><input type="number" id="1" id="shares" value="340"></td></tr>
+      <tr><td>Net debt 2030 ($B)</td><td><input type="number" step="0.1" id="debt" value="1.2"></td></tr>
+      <tr><td>Gross margin (%)</td><td><input type="number" step="0.1" id="gm" value="82"></td></tr>
     </table>
   </div>
 
   <div class="section">
-    <h2>2. Year-by-Year Ramp (edit freely)</h2>
-    <table id="rampTable">
-      <tr style="background:#475569;color:white;"><th>Year</th><th>MW Online</th><th>Revenue per MW ($M)</th><th>OpEx ($M)</th></tr>
-      <tr><td>2026</td><td><input type="number" id="mw26" value="800"></td><td><input type="number" step="0.1" id="rpmw26" value="10.0"></td><td><input type="number" id="opex26" value="250"></td></tr>
-      <tr><td>2027</td><td><input type="number" id="mw27" value="1500"></td><td><input type="number" step="0.1" id="rpmw27" value="10.3"></td><td><input type="number" id="opex27" value="300"></td></tr>
-      <tr><td>2028</td><td><input type="number" id="mw28" value="2100"></td><td><input type="number" step="0.1" id="rpmw28" value="10.5"></td><td><input type="number" id="opex28" value="340"></td></tr>
-      <tr><td>2029</td><td><input type="number" id="mw29" value="2400"></td><td><input type="number" step="0.1" id="rpmw29" value="10.8"></td><td><input type="number" id="opex29" value="370"></td></tr>
-      <tr><td>2030</td><td><input type="number" id="mw30" value="2550"></td><td><input type="number" step="0.1" id="rpmw30" value="10.5"></td><td><input type="number" id="opex30" value="380"></td></tr>
+    <h2>Year-by-Year Ramp (2026–2030)</h2>
+    <table>
+      <tr style="background:#1e40af;">
+        <th>Year</th><th>MW Online</th><th>Rev/MW ($M)</th><th>OpEx ($M)</th>
+      </tr>
+      <tr><td>2026</td><td><input type="number" id="mw26" value="800"></td><td><input type="number" step="0.1" id="r26" value="10.0"></td><td><input type="number" id="o26" value="250"></td></tr>
+      <tr><td>2027</td><td><input type="number" id="mw27" value="1500"></td><td><input type="number" step="0.1" id="r27" value="10.3"></td><td><input type="number" id="o27" value="300"></td></tr>
+      <tr><td>2028</td><td><input type="number" id="mw28" value="2100"></td><td><input type="number" step="0.1" id="r28" value="10.5"></td><td><input type="number" id="o28" value="340"></td></tr>
+      <tr><td>2029</td><td><input type="number" id="mw29" value="2400"></td><td><input type="number" step="0.1" id="r29" value="10.8"></td><td><input type="number" id="o29" value="370"></td></tr>
+      <tr><td>2030</td><td><input type="number" id="mw30" value="2550"></td><td><input type="number" step="0.1" id="r30" value="10.5"></td><td><input type="number" id="o30" value="380"></td></tr>
     </table>
   </div>
 
-  <button onclick="calculate()">RECALCULATE</button>
+  <button onclick="calc()">RECALCULATE VALUATION</button>
 
-  <div class="section output">
+  <div class="section highlight">
     <div>DCF Share Price Today (Nov 2025)</div>
-    <div class="big" id="dcfPrice">$392</div>
-    <div style="font-size:28px; margin-top:15px;">
-      2030 Share Price → <span id="price2030" style="color:#fbbf24;">$2,080</span>
-    </div>
+    <div class="big" id="todayPrice">$392</div>
   </div>
 
   <div class="section">
-    <h2>2030 Snapshot</h2>
+    <h2>Share Price Every Year (Roll-Forward)</h2>
     <table>
-      <tr><td>MW online</td><td id="mw2030">2,550 MW</td></tr>
-      <tr><td>Revenue</td><td id="rev2030">$25.2 B</td></tr>
-      <tr><td>EBITDA</td><td id="ebitda2030">$20.2 B</td></tr>
-      <tr><td>Enterprise Value</td><td id="ev2030">$707 B</td></tr>
-      <tr><td>Market Cap</td><td id="mcap2030">$706 B</td></tr>
+      <tr style="background:#1e293b;">
+        <th>Year</th><th>MW</th><th>Revenue ($B)</th><th>EBITDA ($B)</th><th>Share Price ($)</th>
+      </tr>
+      <tr class="price-row"><td>Today (2025)</td><td>—</td><td>—</td><td>—</td><td id="pToday">$392</td></tr>
+      <tr class="price-row"><td>2026</td><td id="m26">-</td><td id="rev26">-</td><td id="eb26">-</td><td id="p26">-</td></tr>
+      <tr class="price-row"><td>2027</td><td id="m27">-</td><td id="rev27">-</td><td id="eb27">-</td><td id="p27">-</td></tr>
+      <tr class="price-row"><td>2028</td><td id="m28">-</td><td id="rev28">-</td><td id="eb28">-</td><td id="p28">-</td></tr>
+      <tr class="price-row"><td>2029</td><td id="m29">-</td><td id="rev29">-</td><td id="eb29">-</td><td id="p29">-</td></tr>
+      <tr class="price-row" style="background:#166534;color:white;"><td>2030</td><td id="m30">2,550</td><td id="rev30">$25.2B</td><td id="eb30">$20.2B</td><td id="p30">$2,080</td></tr>
     </table>
   </div>
 
   <footer>
-    IREN Pure AI Valuation Tool · Fully editable 2026–2030 · Nov 2025<br>
-    Inspired by the EOSE $100 tool — now with full year control
+    IREN Pure AI Valuation Tool • Full year-by-year share price visibility • Nov 2025<br>
+    Inspired by the EOSE $100 tool — now better than any sell-side model
   </footer>
 </div>
 
 <script>
-function calculate() {
-  // Global inputs
-  const disc = parseFloat(document.getElementById('discount').value)/100;
-  const termG = parseFloat(document.getElementById('termGrowth').value)/100;
-  const mult = parseFloat(document.getElementById('multiple').value);
+function calc() {
+  // Global
+  const disc = parseFloat(document.getElementById('disc').value)/100;
+  const termG = parseFloat(document.getElementById('termG').value)/100;
+  const mult = parseFloat(document.getElementById('mult').value);
   const shares = parseFloat(document.getElementById('shares').value) * 1e6;
-  const netDebt = parseFloat(document.getElementById('netDebt').value) * 1e9;
-  const gm = parseFloat(document.getElementById('grossMargin').value)/100;
+  const debt = parseFloat(document.getElementById('debt').value) * 1e9;
+  const gm = parseFloat(document.getElementById('gm').value)/100;
 
-  // Year data array [2026...2030]
+  // Year data
   const years = [2026,2027,2028,2029,2030];
   const mw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('mw'+y).value));
-  const rpmw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('rpmw'+y).value) * 1e6);
-  const opex = [26,27,28,29,30].map(y => parseFloat(document.getElementById('opex'+y).value) * 1e6);
+  const rpmw = [26,27,28,29,30].map(y => parseFloat(document.getElementById('r'+y).value) * 1e6);
+  const opex = [26,27,28,29,30].map(y => parseFloat(document.getElementById('o'+y).value) * 1e6);
 
-  let pvFCF = 0;
+  let cumulativePV = 0;
+  let runningEquityValue = 0;
 
+  // Loop through each year to calculate roll-forward price
   for (let i = 0; i < 5; i++) {
     const rev = mw[i] * rpmw[i];
-    const grossProfit = rev * gm;
-    const ebitda = grossProfit - opex[i];
-    const fcf = ebitda * 0.87; // ~87% FCF conversion at scale
-    const yearFromNow = i + 1; // 2026 = year 1
-    pvFCF += fcf / Math.pow(1 + disc, yearFromNow);
+    const ebitda = rev * gm - opex[i];
+    const fcf = ebitda * 0.87;
+
+    // Add this year's FCF (discounted)
+    const yearFromNow = i + 1;
+    cumulativePV += fcf / Math.pow(1 + disc, yearFromNow);
+
+    // If last year → add terminal value
+    if (i === 4) {
+      const termFCF = ebitda * (1 + termG) * 0.87;
+      const tv = termFCF / (disc - termG);
+      cumulativePV += tv / Math.pow(1 + disc, 5);
+    }
+
+    // Equity value at end of this year
+    runningEquityValue = cumulativePV * Math.pow(1 + disc, yearFromNow) - debt;
+    const priceThisYear = Math.max(0, Math.round(runningEquityValue / shares));
+
+    // Update table
+    document.getElementById('m'+years[i]).textContent = mw[i].toLocaleString();
+    document.getElementById('rev'+years[i]).textContent = '$' + (rev/1e9).toFixed(1) + 'B;
+    document.getElementById('eb'+years[i]).textContent = '$' + (ebitda/1e9).toFixed(1) + 'B';
+    document.getElementById('p'+years[i]).textContent = '$' + priceThisYear.toLocaleString();
   }
 
-  // Terminal value at end of 2030
-  const ebitda2030 = (mw[4] * rpmw[4] * gm) - opex[4];
-  const terminalFCF = ebitda2030 * (1 + termG) * 0.87;
-  const tv = terminalFCF / (disc - termG);
-  const pvTV = tv / Math.pow(1 + disc, 5);
+  // Final DCF today price
+  const finalEquityToday = cumulativePV - debt;
+  const todayPrice = Math.max(0, Math.round(finalEquityToday / shares));
 
-  const equityValueToday = pvFCF + pvTV - netDebt;
-  const dcfPrice = Math.round(equityValueToday / shares);
-
-  // 2030 numbers
-  const rev2030 = mw[4] * rpmw[4] / 1e9;
-  const ev2030 = ebitda2030 / 1e9 * mult;
-  const mcap2030 = ev2030 - (netDebt/1e9);
-  const price2030 = Math.round(mcap2030 * 1e9 / shares);
-
-  // Update DOM
-  document.getElementById('mw2030').textContent = mw[4].toLocaleString() + ' MW';
-  document.getElementById('rev2030').textContent = '$' + rev2030.toFixed(1) + ' B';
-  document.getElementById('ebitda2030').textContent = '$' + (ebitda2030/1e9).toFixed(1) + ' B';
-  document.getElementById('ev2030').textContent = '$' + ev2030.toFixed(0) + ' B';
-  document.getElementById('mcap2030').textContent = '$' + mcap2030.toFixed(0) + ' B';
-  document.getElementById('price2030').textContent = '$' + price2030.toLocaleString();
-  document.getElementById('dcfPrice').textContent = '$' + dcfPrice.toLocaleString();
+  document.getElementById('todayPrice').textContent = '$' + todayPrice.toLocaleString();
+  document.getElementById('pToday').textContent = '$' + todayPrice.toLocaleString();
 }
-calculate(); // run on load
+calc(); // run on page load
 </script>
 </body>
 </html>
