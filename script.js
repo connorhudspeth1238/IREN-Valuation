@@ -34,7 +34,7 @@ function renderAssumptions() {
       const val = parseFloat(e.target.textContent) || 0;
       if (e.target.dataset.arr) {
         const arr = e.target.dataset.arr;
-        const idx = e.target.dataset.idx;
+        const idx = parseInt(e.target.dataset.idx);
         data[arr][idx] = val;
       } else if (e.target.dataset.key) {
         data[e.target.dataset.key] = val;
@@ -45,11 +45,11 @@ function renderAssumptions() {
 }
 
 function updateAllCharts() {
-  // Destroy existing charts
+  // Destroy old charts
   Object.keys(charts).forEach(key => charts[key]?.destroy());
   charts = {};
 
-  // 1. MW Chart
+  // 1. MW Online Chart
   charts.mw = new Chart(document.getElementById("mwChart"), {
     type: "bar",
     data: {
@@ -61,7 +61,11 @@ function updateAllCharts() {
         { label: "BC",           data: data.mw.BC,           stack: "s", backgroundColor: "#d62728" }
       ]
     },
-    options: { responsive: true, plugins: { title: { display: true, text: "AI/HPC MW Online by Site" }}, scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true }}}
+    options: {
+      responsive: true,
+      plugins: { title: { display: true, text: "AI/HPC MW Online by Site" }},
+      scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true }}
+    }
   });
 
   // 2. DCF Chart
@@ -79,29 +83,28 @@ function updateAllCharts() {
     options: { responsive: true, scales: { y1: { position: "right" }}}
   });
 
-  // 3. PRICE PATH CHART — THIS IS THE ONLY ONE THAT RUNS NOW
+  // 3. PRICE PATH CHART — FINAL & PERFECT
   charts.price = new Chart(document.getElementById("priceChart"), {
     type: "line",
     data: {
       labels: ["Today", "End-2026", "End-2027", "End-2028", "End-2029", "End-2030"],
       datasets: [
-        { label: "10× Terminal", data: [64, 80, 115, 150, 185, 268], borderColor: "#9467bd", tension: 0.3, pointRadius: 6 },
-        { label: "15× Terminal", data: [64, 92, 138, 185, 235, 322], borderColor: "#1f77b4", tension: 0.3, pointRadius: 6 },
-        { label: "20× Terminal", data: [64,105, 162, 220, 285, 429], borderColor: "#ff7f0e", tension: 0.3, pointRadius: 6 }
+        { label: "10× Terminal", data: [64,  80, 115, 150, 185, 268], borderColor: "#9467bd", tension: 0.3, pointRadius: 6, fill: false },
+        { label: "15× Terminal", data: [64,  92, 138, 185, 235, 322], borderColor: "#1f77b4", tension: 0.3, pointRadius: 6, fill: false },
+        { label: "20× Terminal", data: [64, 105, 162, 220, 285, 429], borderColor: "#ff7f0e", tension: 0.3, pointRadius: 6, fill: false }
       ]
     },
     options: {
       responsive: true,
       plugins: {
-        title: {
-          display: true,
-          text: "Fair Share Price Path (10× / 15× / 20× Terminal Multiple)",
-          font: { size: 18 }
-        },
+        legend: { position: "top" },
+        title: { display: false },  // ← hides duplicate title
         subtitle: {
           display: true,
-          text: "Current Fair Value = $64 (base case) → up to $429 by 2030",
-          font: { size: 14 }
+          text: "Fair Share Price Path (10× / 15× / 20× Terminal Multiple)\nCurrent Fair Value = $64 (base case) → up to $429 by 2030",
+          font: { size: 16, weight: "bold" },
+          color: "#1f77b4",
+          padding: { bottom: 20 }
         }
       },
       scales: {
@@ -111,7 +114,7 @@ function updateAllCharts() {
   });
 }
 
-// Init
+// Initialize dashboard
 document.addEventListener("DOMContentLoaded", () => {
   renderAssumptions();
   calculate();
