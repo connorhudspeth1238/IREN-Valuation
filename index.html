@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IREN $1000+ AI Valuation Tool (No Mining)</title>
+  <meta name="description" content="Interactive DCF valuation of IREN Limited as a pure AI/HPC data center company – zero Bitcoin mining."/>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+    .container { max-width: 1100px; margin: auto; background: #1e293b; border-radius: 16px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+    h1 { text-align: center; color: #60a5fa; margin-bottom: 10px; }
+    .subtitle { text-align: center; color: #94a3b8; margin-bottom: 30px; font-style: italic; }
+    .section { background: #334155; border-radius: 1px solid #475569; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    h2 { color: #93c5fd; border-bottom: 2px solid #60a5fa; padding-bottom: 8px; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 10px; }
+    input { width: 100%; padding: 10px; background: #1e293b; border: 1px solid #475569; border-radius: 6px; color: white; font-size: 16px; }
+    .output { font-size: 28px; font-weight: bold; color: #86efac; text-align: center; padding: 20px; background: #166534; border-radius: 12px; }
+    .big { font-size: 48px; color: #86efac; }
+    button { background: #3b82f6; color: white; border: none; padding: 14px 30px; font-size: 18px; border-radius: 8px; cursor: pointer; display: block; margin: 30px auto; }
+    button:hover { background: #2563eb; }
+    footer { text-align: center; margin-top: 40px; color: #64748b; font-size: 14px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>IREN – Pure AI/HPC Valuation Tool</h1>
+  <p class="subtitle">No Bitcoin mining. 100% AI Cloud revenue. Updated Nov 2025</p>
+
+  <div class="section">
+    <h2>Assumptions – Change any number and click "Recalculate"</h2>
+    <table>
+      <tr><td>Discount rate</td><td><input type="number" step="0.1" id="discount" value="18.0"> %</td></tr>
+      <tr><td>Terminal growth rate (post-2030)</td><td><input type="number" step="0.1" id="terminalGrowth" value="6.0"> %</td></tr>
+      <tr><td>2030 exit EBITDA multiple</td><td><input type="number" step="1" id="multiple" value="35"> ×</td></tr>
+      <tr><td>Diluted shares 2030 (millions)</td><td><input type="number" step="1" id="shares" value="340"></td></tr>
+      <tr><td>Net debt 2030 ($B)</td><td><input type="number" step="0.1" id="netDebt" value="1.2"></td></tr>
+      <tr><td colspan="2"><strong>Capacity</strong></td></tr>
+      <tr><td>Total power pipeline</td><td><input type="number" id="pipeline" value="3000"> MW</td></tr>
+      <tr><td>% online by 2030</td><td><input type="number" step="1" id="onlinePct" value="85"> %</td></tr>
+      <tr><td>Revenue per MW per year</td><td><input type="number" step="0.1" id="revPerMW" value="10.5"> $M</td></tr>
+      <tr><td>Utilization / availability</td><td><input type="number" step="1" id="util" value="94"> %</td></tr>
+      <tr><td>Gross margin (AI only)</td><td><input type="number" step="0.1" id="grossMargin" value="82"> %</td></tr>
+      <tr><td>Annual OpEx 2030 ($M)</td><td><input type="number" id="opex" value="380"></td></tr>
+    </table>
+    <button onclick="calculate()">Recalculate</button>
+  </div>
+
+  <div class="section output">
+    <div>DCF Share Price Today (Nov 2025)</div>
+    <div class="big" id="dcfPrice">$392</div>
+    <div style="font-size:22px;margin-top:10px">Implied 2030 Share Price → <span id="futurePrice" style="color:#fbbf24">$2,080</span></div>
+  </div>
+
+  <div class="section">
+    <h2>2030 Steady-State Numbers</h2>
+    <table>
+      <tr><td>Online AI/HPC capacity</td><td id="mw2030">2,550 MW</td></tr>
+      <tr><td>Revenue</td><td id="revenue">$25.15 B</td></tr>
+      <tr><td>EBITDA</td><td id="ebitda">$20.24 B</td></tr>
+      <tr><td>EBITDA margin</td><td id="margin">80.5 %</td></tr>
+      <tr><td>Enterprise value</td><td id="ev">$708 B</td></tr>
+      <tr><td>Market cap</td><td id="mcap">$707 B</td></tr>
+    </table>
+  </div>
+
+  <footer>
+    Pure AI IREN Valuation Tool – No Bitcoin mining – Nov 2025<br/>
+    Inspired by the legendary EOSE $100 tool. Share freely.
+  </footer>
+</div>
+
+<script>
+function calculate() {
+  // Inputs
+  const discount = parseFloat(document.getElementById('discount').value) / 100;
+  const termGrowth = parseFloat(document.getElementById('terminalGrowth').value) / 100;
+  const multiple = parseFloat(document.getElementById('multiple').value);
+  const shares = parseFloat(document.getElementById('shares').value);
+  const netDebt = parseFloat(document.getElementById('netDebt').value) * 1e9;
+  const pipeline = parseFloat(document.getElementById('pipeline').value);
+  const onlinePct = parseFloat(document.getElementById('onlinePct').value) / 100;
+  const revPerMW = parseFloat(document.getElementById('revPerMW').value) * 1e6;
+  const util = parseFloat(document.getElementById('util').value) / 100;
+  const grossMargin = parseFloat(document.getElementById('grossMargin').value) / 100;
+  const opex = parseFloat(document.getElementById('opex').value) * 1e6;
+
+  // 2030 numbers
+  const mw2030 = Math.round(pipeline * onlinePct / 50) * 50; // round to nearest 50 MW
+  const revenue = mw2030 * revPerMW * util / 1e9;
+  const grossProfit = revenue * grossMargin;
+  const ebitda = grossProfit - opex / 1e9;
+  const ev = ebitda * multiple;
+  const mcap = ev - netDebt / 1e9;
+  const price2030 = mcap * 1e9 / (shares * 1e6);
+
+  // Simplified 5-year DCF (2026–2030) + terminal
+  // Using aggressive but guided ramp (MW): 800 → 1500 → 2100 → 2400 → 2550
+  const mwRamp = [800, 1500, 2100, 2400, mw2030];
+  let pv = 0;
+  for (let y = 1; y <= 5; y++) {
+    const revY = mwRamp[y-1] * revPerMW * util / 1e9;
+    const ebitdaY = revY * grossMargin - opex/1e9 * Math.pow(1.15, y-1)/1e9;
+    const fcf = ebitdaY * 0.85; // 85% FCF conversion
+    pv += fcf / Math.pow(1 + discount, y);
+  }
+  // Terminal value at 2030
+  const terminalFCF = ebitda * 1.06 * 0.85;
+  const tv = terminalFCF / (discount - termGrowth);
+  pv += tv / Math.pow(1 + discount, 5);
+
+  const equityValueToday = pv * 1e9 - netDebt;
+  const dcfPrice = Math.round(equityValueToday / (shares * 1e6));
+
+  // Update page
+  document.getElementById('mw2030').textContent = mw2030.toLocaleString() + ' MW';
+  document.getElementById('revenue').textContent = '$' + revenue.toFixed(1) + ' B';
+  document.getElementById('ebitda').textContent = '$' + ebitda.toFixed(1) + ' B';
+  document.getElementById('margin').textContent = (ebitda / revenue * 100).toFixed(1) + ' %';
+  document.getElementById('ev').textContent = '$' + (ev).toFixed(0) + ' B';
+  document.getElementById('mcap').textContent = '$' + (mcap).toFixed(0) + ' B';
+  document.getElementById('futurePrice').textContent = '$' + Math.round(price2030).toLocaleString();
+  document.getElementById('dcfPrice').textContent = '$' + dcfPrice.toLocaleString();
+}
+calculate(); // run on load
+</script>
+</body>
+</html>
